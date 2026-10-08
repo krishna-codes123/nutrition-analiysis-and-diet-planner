@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Client History</title>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    /* ===== MAIN PAGE ===== */
+
+    body {
+        margin: 0;
+        padding: 30px;
+        font-family: Arial, sans-serif;
+
+        background: linear-gradient(
+            135deg,
+            #D7A86E 0%,
+            #F3D6A4 45%,
+            #8D5524 100%
+        );
+
+        color: #3E2723;
+        min-height: 100vh;
+    }
+
+    /* ===== PAGE TITLE ===== */
+
+    h1 {
+        text-align: center;
+
+        color: #5D4037;
+
+        margin-bottom: 25px;
+
+        font-size: 32px;
+
+        text-shadow:
+            2px 2px 0px #E8C39E;
+    }
+
+    h1 span {
+        color: #A0522D;
+    }
+
+    /* ===== SEARCH BOX ===== */
+
+    #search {
+        display: block;
+
+        width: 320px;
+
+        padding: 12px 15px;
+
+        margin: 0 auto 25px auto;
+
+        border: 2px solid #B87333;
+
+        border-radius: 8px;
+
+        font-size: 15px;
+
+        outline: none;
+
+        background: #FFFDF7;
+
+        color: #3E2723;
+
+        box-shadow:
+            0 3px 10px rgba(93, 64, 55, 0.12);
+
+        transition: 0.3s;
+    }
+
+    /* ===== SEARCH FOCUS ===== */
+
+    #search:focus {
+        border-color: #D2694A;
+
+        background: #FFF8E7;
+
+        box-shadow:
+            0 3px 12px rgba(210, 105, 74, 0.20);
+    }
+
+    /* ===== HISTORY TABLE ===== */
+
+    table {
+        width: 100%;
+
+        border-collapse: collapse;
+
+        background: #FFFDF7;
+
+        box-shadow:
+            0 10px 25px rgba(93, 64, 55, 0.22);
+
+        border-radius: 12px;
+
+        overflow: hidden;
+    }
+
+    /* ===== TABLE HEADER ===== */
+
+    th {
+        background: linear-gradient(
+            90deg,
+            #6D4C41,
+            #8D5524,
+            #D2694A
+        );
+
+        color: white;
+
+        padding: 14px;
+
+        font-size: 15px;
+    }
+
+    /* ===== TABLE DATA ===== */
+
+    td {
+        padding: 13px;
+
+        text-align: center;
+
+        border-bottom: 1px solid #E6C9A8;
+
+        background: #FFFDF7;
+
+        color: #4E342E;
+    }
+
+    /* ===== ALTERNATE ROW ===== */
+
+    tr:nth-child(even) td {
+        background: #F8E4C0;
+    }
+
+    /* ===== ROW HOVER ===== */
+
+    tr:hover td {
+        background: #FFE0B2;
+
+        transition: 0.2s;
+    }
+
+    /* ===== EDIT BUTTON ===== */
+
+    .edit-btn {
+        display: inline-block;
+
+        background: linear-gradient(
+            90deg,
+            #8D5524,
+            #B87333
+        );
+
+        color: white;
+
+        padding: 8px 14px;
+
+        text-decoration: none;
+
+        border-radius: 6px;
+
+        margin-right: 6px;
+
+        transition: 0.2s;
+
+        box-shadow:
+            0 3px 8px rgba(93, 64, 55, 0.20);
+    }
+
+    /* ===== DELETE BUTTON ===== */
+
+    .delete-btn {
+        display: inline-block;
+
+        background: linear-gradient(
+            90deg,
+            #A0522D,
+            #D2694A
+        );
+
+        color: white;
+
+        padding: 8px 14px;
+
+        text-decoration: none;
+
+        border-radius: 6px;
+
+        transition: 0.2s;
+
+        box-shadow:
+            0 3px 8px rgba(93, 64, 55, 0.20);
+    }
+
+    /* ===== EDIT HOVER ===== */
+
+    .edit-btn:hover {
+        background: linear-gradient(
+            90deg,
+            #6D4C41,
+            #8D5524
+        );
+
+        transform: translateY(-1px);
+    }
+
+    /* ===== DELETE HOVER ===== */
+
+    .delete-btn:hover {
+        background: linear-gradient(
+            90deg,
+            #8B4513,
+            #A0522D
+        );
+
+        transform: translateY(-1px);
+    }
+
+    /* ===== MOBILE VIEW ===== */
+
+    @media (max-width: 700px) {
+
+        body {
+            padding: 15px;
+        }
+
+        h1 {
+            font-size: 25px;
+        }
+
+        #search {
+            width: 100%;
+        }
+
+        table {
+            font-size: 13px;
+        }
+
+        th,
+        td {
+            padding: 9px 6px;
+        }
+
+        .edit-btn,
+        .delete-btn {
+            padding: 6px 9px;
+            margin: 2px;
+        }
+    }
+
+</style>
+</head>
+
+<body>
+
+    <h1>
+        Client <span>History</span>
+    </h1>
+
+    <input
+        type="text"
+        id="search"
+        placeholder="Search client name..."
+    >
+
+    <table>
+
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Height</th>
+            <th>Weight</th>
+            <th>BMI</th>
+            <th>Action</th>
+        </tr>
+
+        {% for client in clients %}
+
+        <tr class="client-row">
+
+            <td>
+                {{ client.id }}
+            </td>
+
+            <td>
+                {{ client.name }}
+            </td>
+
+            <td>
+                {{ client.age }}
+            </td>
+
+            <td>
+                {{ client.gender }}
+            </td>
+
+            <td>
+                {{ client.height }}
+            </td>
+
+            <td>
+                {{ client.weight }}
+            </td>
+
+            <td>
+                {{ client.bmi }}
+            </td>
+
+            <td>
+
+                <a
+                    class="edit-btn"
+                    href="/edit/{{ client.id }}"
+                >
+                    Edit
+                </a>
+
+                <a
+                    class="delete-btn"
+                    href="/delete/{{ client.id }}"
+                    onclick="return confirm('Delete this client?')"
+                >
+                    Delete
+                </a>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+
+    <script>
+
+        document
+            .getElementById("search")
+            .addEventListener("input", function() {
+
+                let searchValue =
+                    this.value.toLowerCase();
+
+                let rows =
+                    document.querySelectorAll(".client-row");
+
+                rows.forEach(function(row) {
+
+                    let name =
+                        row.cells[1]
+                            .textContent
+                            .toLowerCase();
+
+                    if (name.includes(searchValue)) {
+
+                        row.style.display = "";
+
+                    } else {
+
+                        row.style.display = "none";
+
+                    }
+
+                });
+
+            });
+
+    </script>
+
+</body>
+
+</html>

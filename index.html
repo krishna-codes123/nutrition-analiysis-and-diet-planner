@@ -1,0 +1,2697 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nutrition Analysis and Diet Planner</title>
+
+<style>
+/* ===== MAIN PAGE ===== */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 30px;
+    font-family: Arial, sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #D7A86E 0%,
+            #F3D6A4 50%,
+            #8D5524 100%
+        );
+
+    min-height: 100vh;
+    color: #3E2723;
+}
+
+/* ===== MAIN CONTAINER ===== */
+
+.container {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 35px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #FFF8E7,
+            #F8E4C0,
+            #F2D1A0
+        );
+
+    border: 3px solid #8D5524;
+    border-radius: 25px;
+
+    box-shadow:
+        0 15px 35px rgba(78, 52, 46, 0.25);
+}
+
+/* ===== MAIN TITLE ===== */
+
+.container h1 {
+    text-align: center;
+
+    color: #5D4037;
+
+    font-size: 32px;
+    margin-bottom: 30px;
+
+    text-shadow:
+        2px 2px 0px #E8C39E;
+}
+
+/* ===== LABELS ===== */
+
+.container > label {
+    display: block;
+
+    margin-top: 16px;
+    margin-bottom: 7px;
+
+    font-weight: bold;
+    font-size: 16px;
+
+    color: #4E342E;
+}
+
+/* ===== INPUTS & SELECT ===== */
+
+.container > input,
+.container > select,
+.surgery-box select {
+
+    display: block;
+
+    width: 100%;
+    max-width: 500px;
+
+    padding: 13px 15px;
+
+    border: 2px solid #B87333;
+    border-radius: 10px;
+
+    font-size: 15px;
+
+    background: #FFFDF7;
+    color: #3E2723;
+
+    outline: none;
+
+    transition: 0.3s;
+}
+
+/* INPUT FOCUS */
+
+.container > input:focus,
+.container > select:focus,
+.surgery-box select:focus {
+
+    border-color: #D2694A;
+
+    background: #FFF1E0;
+
+    box-shadow:
+        0 0 10px rgba(210, 105, 74, 0.30);
+
+    transform: scale(1.01);
+}
+
+/* ===== SURGERY BOX ===== */
+
+.surgery-box {
+
+    margin-top: 15px;
+    padding: 20px;
+
+    max-width: 650px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #FFF3E0,
+            #FCE4EC
+        );
+
+    border: 2px solid #C47A44;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 5px 15px rgba(78, 52, 46, 0.15);
+}
+
+.surgery-box label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-weight: bold;
+
+    color: #6D4C41;
+
+}
+
+.surgery-box h3 {
+
+    margin-top: 0;
+
+    color: #A0522D;
+
+}
+
+/* ===== GENERATE BUTTON ===== */
+
+.container > button {
+
+    display: block;
+
+    margin: 30px auto;
+
+    padding: 15px 38px;
+
+    border: none;
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #8D5524,
+            #C47A44,
+            #D2694A
+        );
+
+    color: #FFFFFF;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 7px 18px rgba(78, 52, 46, 0.25);
+
+    transition: 0.3s;
+}
+
+.container > button:hover {
+
+    transform: translateY(-3px) scale(1.03);
+
+    box-shadow:
+        0 10px 25px rgba(78, 52, 46, 0.35);
+}
+
+/* ===== REPORT AREA ===== */
+
+
+   #result {
+    max-width: 750px;
+    margin: 20px auto 0;
+    padding: 15px;
+    background:
+        linear-gradient(
+            145deg,
+            #FFF8E7,
+            #FFFFFF,
+            #F7E6CC
+        );
+    border: 3px solid #B87333;
+    border-radius: 18px;
+    box-shadow:
+        0 8px 20px rgba(78, 52, 46, 0.20);
+}
+/* ===== REPORT TITLE ===== */
+
+.report-title {
+
+    text-align: center;
+
+    font-size: 30px;
+
+    font-weight: bold;
+
+    color: #5D4037;
+
+    margin-bottom: 25px;
+
+    text-shadow:
+        2px 2px 0px #E8C39E;
+}
+
+/* ===== REPORT HEADINGS ===== */
+
+#result h2 {
+
+    text-align: center;
+
+    font-size: 25px;
+
+    color: #6D4C41 !important;
+
+    margin-top: 28px;
+    margin-bottom: 18px;
+
+    padding: 10px;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #F3D6A4,
+            #F6C9A8
+        );
+}
+
+#result h3 {
+
+    color: #A0522D !important;
+
+    font-size: 21px;
+
+    margin-top: 22px;
+    margin-bottom: 14px;
+
+    padding: 8px 12px;
+
+    border-left: 6px solid #B87333;
+
+    border-radius: 8px;
+
+    background: #FFF1E0;
+}
+
+/* ===== REPORT PARAGRAPH ===== */
+
+#result p {
+
+    font-size: 16px;
+
+    line-height: 1.7;
+
+    color: #3E2723;
+}
+
+/* ===== TABLE ===== */
+
+#result table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    margin: 20px 0;
+
+    overflow: hidden;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 6px 15px rgba(78, 52, 46, 0.18);
+}
+
+/* TABLE HEADER */
+
+#result th {
+
+    padding: 14px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #6D4C41,
+            #8D5524,
+            #D2694A
+        );
+
+    color: #FFFFFF;
+
+    font-size: 15px;
+}
+
+/* TABLE DATA */
+
+#result td {
+
+    padding: 13px;
+
+    text-align: center;
+
+    border-bottom: 2px solid #D7B899;
+
+    background: #FFF8E7;
+
+    color: #3E2723;
+}
+
+/* ALTERNATE ROW */
+
+#result tr:nth-child(even) td {
+
+    background: #F7E6CC;
+}
+
+/* TABLE HOVER */
+
+#result tr:hover td {
+
+    background: #FFE0B2;
+
+    transition: 0.2s;
+}
+
+/* ===== TIP BOX ===== */
+
+.tip {
+
+    margin: 20px 0;
+
+    padding: 20px;
+
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #F3D6A4,
+            #F6C9A8
+        );
+
+    border-left: 7px solid #8D5524;
+    border-right: 7px solid #D2694A;
+
+    color: #3E2723;
+
+    font-size: 15px;
+
+    line-height: 1.8;
+
+    box-shadow:
+        0 5px 15px rgba(78, 52, 46, 0.15);
+}
+
+/* TIP TITLE */
+
+.tip b {
+
+    color: #5D4037;
+
+    font-size: 17px;
+}
+/* ===== THANK YOU NOTE ===== */
+
+.thank-you-note {
+    margin: 25px 0 5px;
+    padding: 18px;
+    text-align: center;
+    background: #E8F5E9;
+    border: 2px solid #8BC34A;
+    border-radius: 15px;
+    color: #33691E;
+    font-size: 15px;
+    line-height: 1.7;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.15);
+}
+
+.thank-you-note b {
+    color: #558B2F;
+    font-size: 20px;
+}
+/* ===== HR ===== */
+
+#result hr {
+
+    border: none;
+
+    height: 3px;
+
+    margin: 30px 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            #8D5524,
+            #B87333,
+            #D2694A
+        );
+}
+
+/* ===== REPORT BUTTON ===== */
+
+#result button {
+
+    display: block;
+
+    margin: 30px auto 0;
+
+    padding: 13px 30px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #8D5524,
+            #D2694A
+        );
+
+    color: #FFFFFF;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+#result button:hover {
+
+    transform: scale(1.05);
+
+    box-shadow:
+        0 7px 18px rgba(78, 52, 46, 0.25);
+}
+
+/* ===== MOBILE VIEW ===== */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 15px;
+    }
+
+    .container {
+        padding: 20px;
+        margin: 10px auto;
+    }
+
+    .container h1 {
+        font-size: 25px;
+    }
+
+    #result {
+        padding: 18px;
+    }
+
+    #result table {
+        font-size: 13px;
+    }
+
+    #result th,
+    #result td {
+        padding: 9px;
+    }
+
+    .container > button {
+        width: 100%;
+    }
+
+    .button-row {
+        flex-direction: column;
+    }
+
+    .button-row button {
+        width: 100%;
+    }
+}
+
+/* ===== NUTRITION REPORT BUTTONS ===== */
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin: 30px auto;
+}
+
+.button-row button {
+    border: none;
+    border-radius: 12px;
+    color: #FFFFFF;
+    font-weight: bold;
+    cursor: pointer;
+
+    background: linear-gradient(
+        90deg,
+        #8D5524,
+        #C47A44,
+        #D2694A
+    );
+
+    box-shadow:
+        0 7px 18px rgba(78, 52, 46, 0.25);
+
+    transition: 0.3s;
+}
+
+/* ===== GENERATE NUTRITION REPORT ===== */
+
+.button-row button:first-child {
+    padding: 16px 38px;
+    font-size: 18px;
+}
+
+/* ===== RESET ALL ===== */
+
+.button-row .reset-all-btn {
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 10px;
+}
+
+/* ===== BUTTON HOVER ===== */
+
+.button-row button:hover {
+    transform: translateY(-3px) scale(1.03);
+
+    box-shadow:
+        0 10px 25px rgba(78, 52, 46, 0.35);
+}
+
+/* ===== MOBILE BUTTONS ===== */
+
+@media (max-width: 600px) {
+
+    .button-row {
+        flex-direction: column;
+    }
+
+    .button-row button {
+        width: 100%;
+    }
+
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Nutrition Analysis and Diet Planner</h1>
+
+<label>Client Name</label>
+
+<input
+type="text"
+id="name"
+placeholder="Enter Client Name">
+
+<label>Age</label>
+
+<input
+type="number"
+id="age"
+placeholder="Enter Age">
+
+<label>Gender</label>
+
+<select id="gender">
+
+<option value="">Select Gender</option>
+
+<option>Male</option>
+
+<option>Female</option>
+
+</select>
+
+<label>Height (cm)</label>
+
+<input
+type="number"
+id="height"
+placeholder="Enter Height">
+
+<label>Weight (kg)</label>
+
+<input
+type="number"
+id="weight"
+placeholder="Enter Weight">
+
+<label>Do You Have Diabetes?</label>
+
+<select id="diabetes">
+
+<option value="">Select</option>
+<option>Yes</option>
+<option>No</option>
+
+</select>
+
+<label>Blood Pressure</label>
+
+<select id="bp">
+
+<option value="">Select</option>
+<option>Normal</option>
+<option>High</option>
+<option>Low</option>
+
+</select>
+
+<label>Previous Surgery</label>
+
+<select id="surgery" onchange="showSurgeryOptions()">
+
+<option value="None">None</option>
+
+<option value="Heart Surgery">Heart Surgery</option>
+
+<option value="Brain Surgery">Brain Surgery</option>
+
+<option value="Stomach Surgery">Stomach Surgery</option>
+
+<option value="Kidney Surgery">Kidney Surgery</option>
+
+<option value="Liver Surgery">Liver Surgery</option>
+
+</select>
+
+
+<!-- ===== SPECIFIC SURGERY OPTIONS ===== -->
+
+<div id="surgeryOptions"></div>
+
+
+<br><br>
+
+<div class="button-row">
+
+    <button type="button" onclick="generateReport()">
+        Generate Nutrition Report
+    </button>
+
+    <button type="button" class="reset-all-btn" onclick="resetAll()">
+        Reset All
+    </button>
+
+</div>
+<div id="result"></div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   SPECIFIC SURGERY OPTIONS
+   ========================================================= */
+
+const surgeryOptions = {
+
+    "Heart Surgery": [
+
+        "CABG / Coronary Artery Bypass Grafting",
+
+        "Angioplasty",
+
+        "Coronary Stent Placement",
+
+        "Heart Valve Repair",
+
+        "Heart Valve Replacement",
+
+        "Pacemaker Implantation",
+
+        "Aortic Aneurysm Repair"
+
+    ],
+
+    "Brain Surgery": [
+
+        "Brain Tumor Removal",
+
+        "Brain Aneurysm Surgery",
+
+        "Epilepsy Surgery",
+
+        "Brain Bleeding Surgery",
+
+        "Hydrocephalus Surgery",
+
+        "Brain Abscess Surgery"
+
+    ],
+
+    "Stomach Surgery": [
+
+        "Ulcer Surgery",
+
+        "Gastrectomy",
+
+        "Gastric Bypass Surgery",
+
+        "Sleeve Gastrectomy",
+
+        "Stomach Cancer Surgery",
+
+        "Gastrointestinal Perforation Surgery"
+
+    ],
+
+    "Kidney Surgery": [
+
+        "Kidney Stone Removal",
+
+        "Partial Nephrectomy",
+
+        "Radical Nephrectomy",
+
+        "Kidney Tumor Surgery",
+
+        "Ureter Surgery",
+
+        "Kidney Transplantation"
+
+    ],
+
+    "Liver Surgery": [
+
+        "Liver Resection",
+
+        "Liver Tumor Removal",
+
+        "Liver Cancer Surgery",
+
+        "Liver Transplantation",
+
+        "Bile Duct Surgery",
+
+        "Gallbladder and Liver Related Surgery"
+
+    ]
+
+};
+
+
+/* =========================================================
+   SHOW SURGERY OPTIONS
+   ========================================================= */
+
+function showSurgeryOptions(){
+
+    let surgery = document.getElementById("surgery").value;
+
+    let box = document.getElementById("surgeryOptions");
+
+    box.innerHTML = "";
+
+    if(surgery == "None"){
+
+        return;
+
+    }
+
+    let options = surgeryOptions[surgery];
+
+    let html = "";
+
+    html += "<div class='surgery-box'>";
+
+    html += "<h3>Select Specific Surgery</h3>";
+
+    html += "<label>Select " + surgery + " Type</label>";
+
+    html += "<select id='specificSurgery'>";
+
+    html += "<option value=''>Select Surgery</option>";
+
+    options.forEach(function(option){
+
+        html += "<option value='" + option + "'>";
+
+        html += option;
+
+        html += "</option>";
+
+    });
+
+    html += "</select>";
+
+    html += "</div>";
+
+    box.innerHTML = html;
+
+}
+
+
+/* ============================================================
+   GENERATE REPORT
+   ============================================================ */
+
+function resetAll() {
+
+    document.getElementById("name").value = "";
+    document.getElementById("age").value = "";
+    document.getElementById("gender").value = "";
+    document.getElementById("height").value = "";
+    document.getElementById("weight").value = "";
+    document.getElementById("diabetes").value = "";
+    document.getElementById("bp").value = "";
+    document.getElementById("surgery").value = "";
+
+    document.getElementById("surgeryOptions").innerHTML = "";
+
+    document.getElementById("result").innerHTML = "";
+    document.getElementById("result").style.display = "none";
+}
+
+
+/* ============================================================
+   GENERATE REPORT
+   ============================================================ */
+
+
+function generateReport(){
+
+let name = document.getElementById("name").value;
+let age = parseInt(document.getElementById("age").value);
+let gender = document.getElementById("gender").value;
+let height = parseFloat(document.getElementById("height").value);
+let weight = parseFloat(document.getElementById("weight").value);
+let diabetes = document.getElementById("diabetes").value;
+let bp = document.getElementById("bp").value;
+let surgery = document.getElementById("surgery").value;
+
+
+/* ===== GET SPECIFIC SURGERY ===== */
+
+let specificSurgery = "";
+
+if(surgery != "None"){
+
+    let specificElement =
+        document.getElementById("specificSurgery");
+
+    if(!specificElement){
+
+        alert("Please select the specific surgery.");
+
+        return;
+
+    }
+
+    specificSurgery = specificElement.value;
+
+    if(specificSurgery == ""){
+
+        alert("Please select the specific surgery.");
+
+        return;
+
+    }
+
+}
+
+
+if(
+    name == "" ||
+    gender == "" ||
+    isNaN(age) ||
+    isNaN(height) ||
+    isNaN(weight)
+){
+
+alert("Please fill all the Client details.");
+
+return;
+
+}
+
+
+/* =========================================================
+   SEND DATA TO FLASK
+   ========================================================= */
+
+fetch("/generate_report", {
+
+    method: "POST",
+
+    headers: {
+
+        "Content-Type": "application/json"
+
+    },
+
+    body: JSON.stringify({
+
+        name: name,
+        age: age,
+        gender: gender,
+        height: height,
+        weight: weight,
+        diabetes: diabetes,
+        bp: bp,
+
+        /* Send selected specific surgery */
+
+        surgery: specificSurgery || surgery
+
+    })
+
+})
+
+.then(response => {
+
+    if (!response.ok) {
+
+        throw new Error("Server error: " + response.status);
+
+    }
+
+    return response.json();
+
+})
+
+.then(data => {
+
+    if (!data.success) {
+
+        alert(
+            "Error: " +
+            (data.error || "Unable to generate report.")
+        );
+
+        return;
+
+    }
+
+
+    /* ===== CLIENT DATA ===== */
+
+    let client = data.client;
+
+    if (!client) {
+
+        alert(
+            "Client data was not received from the server."
+        );
+
+        return;
+
+    }
+
+
+    let bmi = client.bmi;
+
+    let bmiStatus = client.bmi_status;
+
+    let bmiAdvice = data.recommendation;
+
+    let report = "";
+
+
+    /* =========================================================
+       REPORT TITLE
+       ========================================================= */
+
+    report +=
+        "<div class='report-title'>" +
+        "Nutrition Analysis Report" +
+        "</div>";
+
+
+    /* =========================================================
+       CLIENT INFORMATION
+       ========================================================= */
+
+    report += "<table>";
+
+    report +=
+        "<tr><th>Client Name</th><td>" +
+        name +
+        "</td></tr>";
+
+    report +=
+        "<tr><th>Age</th><td>" +
+        age +
+        "</td></tr>";
+
+    report +=
+        "<tr><th>Gender</th><td>" +
+        gender +
+        "</td></tr>";
+
+    report +=
+        "<tr><th>Height</th><td>" +
+        height +
+        " cm</td></tr>";
+
+    report +=
+        "<tr><th>Weight</th><td>" +
+        weight +
+        " kg</td></tr>";
+
+    report +=
+        "<tr><th>BMI</th><td>" +
+        bmi +
+        "</td></tr>";
+
+    report +=
+        "<tr><th>BMI Status</th><td>" +
+        bmiStatus +
+        "</td></tr>";
+
+    report +=
+        "<tr><th>Diabetes</th><td>" +
+        diabetes +
+        "</td></tr>";
+
+    report +=
+        "<tr><th>Blood Pressure</th><td>" +
+        bp +
+        "</td></tr>";
+
+    report +=
+        "<tr><th>Previous Surgery</th><td>" +
+        (surgery == "None"
+            ? "None"
+            : specificSurgery) +
+        "</td></tr>";
+
+    report += "</table>";
+
+
+    /* =========================================================
+       BMI RECOMMENDATION
+       ========================================================= */
+
+    report +=
+        "<div class='tip'>" +
+        "<b>BMI Recommendation</b><br>" +
+        bmiAdvice +
+        "</div>";
+
+
+    /* =========================================================
+       GENERAL DIET PLAN
+       ========================================================= */
+
+    report +=
+        "<br><h2 style='color:green;'>" +
+        "Personalized General Diet Plan" +
+        "</h2>";
+
+
+    if(gender=="Male"){
+
+        report +=
+            "<h3 style='color:blue;'>" +
+            "Male Diet Plan" +
+            "</h3>";
+
+        report += "<table>";
+
+        report +=
+            "<tr><th>Meal</th>" +
+            "<th>Recommended Food</th></tr>";
+
+        report +=
+            "<td>🍳 Breakfast</td>" +
+            "<td>2 Boiled Eggs, Oats, Milk, Banana</td></tr>";
+
+        report +=
+            "<td>🍐 Mid Morning</td> "+
+            "<td>Apple + Almonds (5)</td></tr>";
+
+        report +=
+            "<td>🍱 Lunch</td>" +
+            "<td>Brown Rice + Grilled Chicken/Fish + Vegetable Curry + Salad</td></tr>";
+
+        report +=
+            "<td>🌱 Evening Snack</td>" +
+            "<td>Sprouts + Green Tea</td></tr>";
+
+        report +=
+            "<td>🌙 Dinner</td>" +
+            "<td>Chapati (2) + Dal + Mixed Vegetables</td></tr>";
+
+        report += "</table>";
+
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Daily Nutrition Recommendation</b><br><br>";
+
+        report += "✔ Protein : 60 - 70 g/day<br>";
+
+        report += "✔ Water : 3 Litres/day<br>";
+
+        report += "✔ Fruits : Minimum 2 Servings/day<br>";
+
+        report += "✔ Vegetables : Minimum 3 Servings/day<br>";
+
+        report += "✔ Whole Grains : Daily<br>";
+
+        report += "✔ Healthy Fats : Nuts & Seeds<br>";
+
+        report += "✔ Exercise : 45 Minutes/Day<br>";
+
+        report += "</div>";
+
+    }
+
+
+    else if(gender=="Female"){
+
+        report +=
+            "<h3 style='color:#e91e63;'>" +
+            "Female Diet Plan" +
+            "</h3>";
+
+        report += "<table>";
+
+        report +=
+            "<tr><th>Meal</th>" +
+            "<th>Recommended Food</th></tr>";
+
+        report +=
+            "<tr><td>🍳Breakfast</td>" +
+            "<td>Idli / Oats + Low Fat Milk + Boiled Egg / Sprouts</td></tr>";
+
+        report +=
+            "<tr><td>🍐Mid-Morning</td>" +
+            "<td>Orange + Almonds (5)</td></tr>";
+
+        report +=
+            "<tr><td>🍱Lunch</td>" +
+            "<td>Brown Rice + Dal + Vegetable Curry + Curd</td></tr>";
+
+        report +=
+            "<tr><td>🌱Evening Snack</td>" +
+            "<td>Fruits + Sprouts</td></tr>";
+
+        report +=
+            "<tr><td>🌙Dinner</td>" +
+            "<td>Chapati (2) + Paneer + Vegetable Soup</td></tr>";
+
+        report += "</table>";
+
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Daily Nutrition Recommendation</b><br><br>";
+
+        report += "✔ Protein : 50 - 60 g/day<br>";
+
+        report += "✔ Water : 2.5 Litres/day<br>";
+
+        report += "✔ Fruits : Minimum 2 Servings/day<br>";
+
+        report += "✔ Vegetables : Minimum 3 Servings/day<br>";
+
+        report +=
+            "✔ Iron Rich Foods : Spinach, Dates, Beans<br>";
+
+        report +=
+            "✔ Calcium Rich Foods : Milk, Curd, Paneer<br>";
+
+        report +=
+            "✔ Exercise/Yoga : 30 Minutes/Day<br>";
+
+        report += "</div>";
+
+    }
+
+
+    /* =========================================================
+       DIABETES DIET PLAN
+       ========================================================= */
+
+    if(diabetes=="Yes"){
+
+        report +=
+            "<br><h2 style='color:red;'>" +
+            "Diabetes Diet Plan" +
+            "</h2>";
+
+
+        if(gender=="Male"){
+
+            report +=
+                "<h3 style='color:blue;'>" +
+                "Male Diabetes Diet" +
+                "</h3>";
+
+            report += "<table>";
+
+            report +=
+                "<tr><th>Meal</th>" +
+                "<th>Recommended Food</th></tr>";
+
+            report +=
+                "<tr><td>Early Morning</td>" +
+                "<td>Warm Water + Fenugreek Seeds</td></tr>";
+
+            report +=
+                "<tr><td>🍳Breakfast</td>" +
+                "<td>Oats / Ragi Porridge + Boiled Egg + Sugar-free Milk</td></tr>";
+
+            report +=
+                "<tr><td>🍐Mid-Morning</td>" +
+                "<td>Apple / Guava</td></tr>";
+
+            report +=
+                "<tr><td>🍱Lunch</td>" +
+                "<td>Brown Rice + Grilled Fish/Chicken + Green Vegetables + Salad</td></tr>";
+
+            report +=
+                "<tr><td>🌱Evening Snack</td>" +
+                "<td>Sprouts + Green Tea</td></tr>";
+
+            report +=
+                "<tr><td>🌙Dinner</td>" +
+                "<td>Chapati + Dal + Mixed Vegetables</td></tr>";
+
+            report += "</table>";
+
+
+            report += "<div class='tip'>";
+
+            report +=
+                "<b>Foods to Avoid</b><br><br>";
+
+            report += "✘ White Rice (Excess)<br>";
+
+            report += "✘ Sweets & Chocolates<br>";
+
+            report += "✘ Sugary Drinks<br>";
+
+            report += "✘ Bakery Foods<br>";
+
+            report += "✘ Junk Foods<br>";
+
+            report += "</div>";
+
+        }
+
+
+        else if(gender=="Female"){
+
+            report +=
+                "<h3 style='color:#e91e63;'>" +
+                "Female Diabetes Diet" +
+                "</h3>";
+
+            report += "<table>";
+
+            report +=
+                "<tr><th>Meal</th>" +
+                "<th>Recommended Food</th></tr>";
+
+            report +=
+                "<tr><td>Early Morning</td>" +
+                "<td>Warm Water + Cinnamon Water</td></tr>";
+
+            report +=
+                "<tr><td>🍳Breakfast</td>" +
+                "<td>Oats / Idli + Sprouts + Low Fat Milk</td></tr>";
+
+            report +=
+                "<tr><td>🍐Mid-Morning</td>" +
+                "<td>Orange / Apple</td></tr>";
+
+            report +=
+                "<tr><td>🍱Lunch</td>" +
+                "<td>Brown Rice + Dal + Vegetable Curry + Salad</td></tr>";
+
+            report +=
+                "<tr><td>🌱Evening Snack</td>" +
+                "<td>Roasted Gram + Green Tea</td></tr>";
+
+            report +=
+                "<tr><td>🌙Dinner</td>" +
+                "<td>Chapati + Vegetable Soup + Paneer</td></tr>";
+
+            report += "</table>";
+
+
+            report += "<div class='tip'>";
+
+            report +=
+                "<b>Foods to Avoid</b><br><br>";
+
+            report += "✘ White Sugar<br>";
+
+            report += "✘ Soft Drinks<br>";
+
+            report += "✘ Cakes & Pastries<br>";
+
+            report += "✘ Fried Foods<br>";
+
+            report += "✘ Ice Cream<br>";
+
+            report += "</div>";
+
+        }
+
+    }
+
+
+    /* =========================================================
+       BLOOD PRESSURE PLAN
+       ========================================================= */
+
+    if(bp=="High"){
+
+        report +=
+            "<br><h2 style='color:red;'>" +
+            "High Blood Pressure Diet Plan" +
+            "</h2>";
+
+        report += "<table>";
+
+        report +=
+            "<tr><th>Meal</th>" +
+            "<th>Recommended Food</th></tr>";
+
+        report +=
+            "<tr><td>🍳Breakfast</td>" +
+            "<td>Oats + Low Fat Milk + Banana</td></tr>";
+
+        report +=
+            "<tr><td>🍐Mid Morning</td>" +
+            "<td>Apple + Unsalted Almonds</td></tr>";
+
+        report +=
+            "<tr><td>🍱Lunch</td>" +
+            "<td>Brown Rice + Grilled Fish + Green Vegetables + Salad</td></tr>";
+
+        report +=
+            "<tr><td>🌱Evening Snack</td>" +
+            "<td>Green Tea + Sprouts</td></tr>";
+
+        report +=
+            "<tr><td>🌙Dinner</td>" +
+            "<td>Chapati + Dal + Vegetable Curry</td></tr>";
+
+        report += "</table>";
+
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Foods to Avoid</b><br><br>";
+
+        report += "✘ Excess Salt<br>";
+
+        report += "✘ Pickles<br>";
+
+        report += "✘ Processed Foods<br>";
+
+        report += "✘ Chips<br>";
+
+        report += "✘ Fast Foods<br>";
+
+        report += "</div>";
+
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Recommended Meditation</b><br><br>";
+
+        report +=
+            "<b>Mindfulness meditation</b><br><br>";
+
+        report += "✔ Reduces stress<br>";
+
+        report += "✔ Improve Focus<br>";
+
+        report += "✔ Helps lower blood pressure<br>";
+
+        report += "✔ Deep Breathing Meditation<br>";
+
+        report +=
+            "✔ Slows heart rate and relaxes the body.<br>";
+
+        report += "</div>";
+
+    }
+
+
+    else if(bp=="Low"){
+
+        report +=
+            "<br><h2 style='color:orange;'>" +
+            "Low Blood Pressure Diet" +
+            "</h2>";
+
+        report += "<div class='tip'>";
+
+        report += "✔ Drink Plenty of Water<br>";
+
+        report += "✔ Eat Small Frequent Meals<br>";
+
+        report +=
+            "✔ Increase Salt Only if Doctor Recommends<br>";
+
+        report +=
+            "✔ Include Fruits, Vegetables and Protein Rich Foods<br>";
+
+        report +=
+            "✔ Avoid Long Gaps Between Meals<br>";
+
+        report += "</div>";
+
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Recommended Meditation</b><br><br>";
+
+        report +=
+            "<b>Body scan meditation</b><br><br>";
+
+        report += "✔ Reduces stress<br>";
+
+        report += "✔ Promotes physical relaxation<br>";
+
+        report +=
+            "✔ Supports blood pressure management<br>";
+
+        report += "</div>";
+
+    }
+
+
+    else{
+
+        report += "<br><div class='tip'>";
+
+        report +=
+            "<b>Blood Pressure Status:</b> Normal<br>";
+
+        report += "✔ Continue Balanced Diet<br>";
+
+        report += "✔ Exercise Daily<br>";
+
+        report += "✔ Drink Enough Water<br>";
+
+        report += "</div>";
+
+    }
+
+
+    /* =========================================================
+       SURGERY SUMMARY
+       ========================================================= */
+
+    if(surgery != "None"){
+
+        report += "<br><hr>";
+
+        report +=
+            "<h2 style='color:#00695c;'>" +
+            "Selected Surgery" +
+            "</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Surgery Type:</b><br><br>";
+
+        report +=
+            "✔ " + specificSurgery + "<br><br>";
+
+        report +=
+            "The following section provides general nutrition " +
+            "and recovery information related to the selected " +
+            "surgery.";
+
+        report += "</div>";
+
+    }
+
+
+    /* =========================================================
+       HEART SURGERY - SPECIFIC PLANS
+       ========================================================= */
+
+    if(specificSurgery == "CABG / Coronary Artery Bypass Grafting"){
+
+        report +=
+            "<br><h2>❤️ CABG / Bypass Surgery</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>What is CABG?</b><br><br>";
+
+        report +=
+            "CABG is a heart bypass operation used in selected " +
+            "patients with significant coronary artery disease. " +
+            "A blood vessel is used to create a new route for " +
+            "blood flow around a blocked or narrowed coronary artery.";
+
+        report += "<br><br><b>Why it may be performed:</b><br><br>";
+
+        report += "• Significant coronary artery blockage<br>";
+
+        report += "• Multiple narrowed coronary arteries<br>";
+
+        report += "• Certain cases where bypass is recommended<br>";
+
+        report += "</div>";
+
+
+        report +=
+            "<h3>Post-CABG Nutrition Plan</h3>";
+
+        report += "<table>";
+
+        report +=
+            "<tr><th>Meal</th><th>Recommended Food</th></tr>";
+
+        report +=
+            "<tr><td>🍳Breakfast</td>" +
+            "<td>Oats + Low Fat Milk + Fruit</td></tr>";
+
+        report +=
+            "<tr><td>🍐Mid Morning</td>" +
+            "<td>Unsalted Nuts + Fruit</td></tr>";
+
+        report +=
+            "<tr><td>🍱Lunch</td>" +
+            "<td>Brown Rice + Dal + Vegetables + Grilled Fish</td></tr>";
+
+        report +=
+            "<tr><td>🌱Evening</td>" +
+            "<td>Sprouts + Green Tea</td></tr>";
+
+        report +=
+            "<tr><td>🌙Dinner</td>" +
+            "<td>Chapati + Dal + Vegetable Soup</td></tr>";
+
+        report += "</table>";
+
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Prefer</b><br><br>";
+
+        report +=
+            "✔ Vegetables<br>" +
+            "✔ Fruits<br>" +
+            "✔ Whole grains<br>" +
+            "✔ Fish and other lean protein sources<br>" +
+            "✔ Unsalted nuts<br><br>";
+
+        report +=
+            "<b>Limit</b><br><br>";
+
+        report +=
+            "✘ Excess salt<br>" +
+            "✘ Deep-fried foods<br>" +
+            "✘ Highly processed foods<br>" +
+            "✘ Foods high in saturated fat";
+
+        report += "</div>";
+
+    }
+
+
+    else if(specificSurgery == "Angioplasty"){
+
+        report +=
+            "<br><h2>❤️ Angioplasty</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>What is Angioplasty?</b><br><br>";
+
+        report +=
+            "Angioplasty is a procedure used to open a narrowed " +
+            "or blocked coronary artery and improve blood flow.";
+
+        report +=
+            "<br><br><b>Nutrition Plan</b><br><br>";
+
+        report +=
+            "Focus on vegetables, fruits, whole grains, lean " +
+            "protein and lower-salt foods.";
+
+        report += "</div>";
+
+        report +=
+            "<h3>Daily Food Plan</h3>";
+
+        report += "<table>";
+
+        report +=
+            "<tr><th>Meal</th><th>Recommended Food</th></tr>";
+
+        report +=
+            "<tr><td>🍳Breakfast</td><td>Oats + Fruit + Low Fat Milk</td></tr>";
+
+        report +=
+            "<tr><td>🍱Lunch</td><td>Brown Rice + Dal + Vegetables</td></tr>";
+
+        report +=
+            "<tr><td>🌱Snack</td><td>Fruit + Unsalted Nuts</td></tr>";
+
+        report +=
+            "<tr><td>🌙Dinner</td><td>Chapati + Vegetable Soup + Lean Protein</td></tr>";
+
+        report += "</table>";
+
+    }
+
+
+    else if(specificSurgery == "Coronary Stent Placement"){
+
+        report +=
+            "<br><h2>❤️ Coronary Stent Placement</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Purpose</b><br><br>";
+
+        report +=
+            "A stent may be placed inside a coronary artery " +
+            "to help keep the artery open after it has been treated.";
+
+        report +=
+            "<br><br><b>Nutrition Focus</b><br><br>";
+
+        report +=
+            "Choose heart-healthy foods and control excess salt, " +
+            "saturated fat and highly processed foods.";
+
+        report += "</div>";
+
+        report +=
+            "<h3>Recommended Recovery Foods</h3>";
+
+        report += "<table>";
+
+        report +=
+            "<tr><th>Meal</th><th>Food</th></tr>";
+
+        report +=
+            "<tr><td>🍳Breakfast</td><td>Oats + Fruit</td></tr>";
+
+        report +=
+            "<tr><td>🍱Lunch</td><td>Brown Rice + Dal + Vegetables</td></tr>";
+
+        report +=
+            "<tr><td>🌱Snack</td><td>Unsalted Nuts + Fruit</td></tr>";
+
+        report +=
+            "<tr><td>🌙Dinner</td><td>Chapati + Vegetables + Lean Protein</td></tr>";
+
+        report += "</table>";
+
+    }
+
+
+    else if(specificSurgery == "Heart Valve Repair"){
+
+        report +=
+            "<br><h2>❤️ Heart Valve Repair</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>What is it?</b><br><br>";
+
+        report +=
+            "Heart valve repair is performed to correct a damaged " +
+            "or poorly functioning valve when repair is appropriate.";
+
+        report += "<br><br><b>Recovery Nutrition</b><br><br>";
+
+        report +=
+            "Use balanced meals with adequate protein, vegetables, " +
+            "whole grains and appropriate fluids as advised.";
+
+        report += "</div>";
+
+        report +=
+            "<h3>Food Plan</h3>";
+
+        report += "<table>";
+
+        report +=
+            "<tr><th>Meal</th><th>Recommended Food</th></tr>";
+
+        report +=
+            "<tr><td>🍳Breakfast</td><td>Oats + Milk + Fruit</td></tr>";
+
+        report +=
+            "<tr><td>🍱Lunch</td><td>Rice + Dal + Vegetables + Fish</td></tr>";
+
+        report +=
+            "<tr><td>🌱Snack</td><td>Fruit + Unsalted Nuts</td></tr>";
+
+        report +=
+            "<tr><td>🌙Dinner</td><td>Chapati + Vegetable Soup</td></tr>";
+
+        report += "</table>";
+
+    }
+
+
+    else if(specificSurgery == "Heart Valve Replacement"){
+
+        report +=
+            "<br><h2>❤️ Heart Valve Replacement</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>What is it?</b><br><br>";
+
+        report +=
+            "Heart valve replacement replaces a damaged valve " +
+            "with an appropriate replacement valve.";
+
+        report +=
+            "<br><br><b>Nutrition Focus</b><br><br>";
+
+        report +=
+            "A balanced, lower-salt diet with adequate protein " +
+            "can support recovery. If the patient uses specific " +
+            "medicines, dietary instructions should follow the " +
+            "treating clinician's advice.";
+
+        report += "</div>";
+
+        report +=
+            "<h3>Recovery Food Plan</h3>";
+
+        report += "<table>";
+
+        report +=
+            "<tr><th>Meal</th><th>Recommended Food</th></tr>";
+
+        report +=
+            "<tr><td>🍳Breakfast</td><td>Oats + Low Fat Milk + Fruit</td></tr>";
+
+        report +=
+            "<tr><td>🍱Lunch</td><td>Brown Rice + Dal + Vegetables</td></tr>";
+
+        report +=
+            "<tr><td>🌱Snack</td><td>Fruit + Unsalted Nuts</td></tr>";
+
+        report +=
+            "<tr><td>🌙Dinner</td><td>Chapati + Vegetables + Lean Protein</td></tr>";
+
+        report += "</table>";
+
+    }
+
+
+    else if(specificSurgery == "Pacemaker Implantation"){
+
+        report +=
+            "<br><h2>❤️ Pacemaker Implantation</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Purpose</b><br><br>";
+
+        report +=
+            "A pacemaker is implanted to help regulate certain " +
+            "abnormal heart rhythms.";
+
+        report +=
+            "<br><br><b>Nutrition Plan</b><br><br>";
+
+        report +=
+            "Choose balanced meals containing vegetables, fruits, " +
+            "whole grains and appropriate protein.";
+
+        report += "</div>";
+
+    }
+
+
+    else if(specificSurgery == "Aortic Aneurysm Repair"){
+
+        report +=
+            "<br><h2>❤️ Aortic Aneurysm Repair</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Purpose</b><br><br>";
+
+        report +=
+            "Aortic aneurysm repair is performed when an aneurysm " +
+            "requires treatment based on its size, location and risk.";
+
+        report +=
+            "<br><br><b>Nutrition Focus</b><br><br>";
+
+        report +=
+            "Follow a heart-healthy, lower-sodium eating pattern " +
+            "and maintain adequate nutrition during recovery.";
+
+        report += "</div>";
+
+    }
+
+
+    else if(specificSurgery == "Brain Tumor Removal"){
+
+        report +=
+            "<br><h2>🧠 Brain Tumor Removal</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Purpose</b><br><br>";
+
+        report +=
+            "Surgery may be used to remove a brain tumor when " +
+            "appropriate, depending on the tumor and its location.";
+
+        report += "<br><br><b>Recovery Nutrition</b><br><br>";
+
+        report +=
+            "Adequate protein, calories, fluids and nutrient-rich " +
+            "foods may support recovery according to the medical team.";
+
+        report += "</div>";
+
+        report +=
+            "<h3>Post-Surgery Food Plan</h3>";
+
+        report += "<table>";
+
+        report +=
+            "<tr><th>Meal</th><th>Recommended Food</th></tr>";
+
+        report +=
+            "<tr><td>🍳 Breakfast</td><td>Egg + Oats + Milk + Banana</td></tr>";
+
+        report +=
+            "<tr><td>Mid Morning</td><td>Fruit + Unsalted Nuts</td></tr>";
+
+        report +=
+            "<tr><td>🍱 Lunch</td><td>Rice + Dal + Vegetables + Fish</td></tr>";
+
+        report +=
+            "<tr><td>🌱 Evening</td><td>Fruit / Curd</td></tr>";
+
+        report +=
+            "<tr><td>🌙 Dinner</td><td>Chapati + Dal + Vegetable Soup</td></tr>";
+
+        report += "</table>";
+
+    }
+
+
+    else if(specificSurgery == "Brain Aneurysm Surgery"){
+
+        report +=
+            "<br><h2>🧠 Brain Aneurysm Surgery</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Purpose</b><br><br>";
+
+        report +=
+            "Surgery or another procedure may be used to treat " +
+            "a brain aneurysm and reduce the risk of bleeding.";
+
+        report +=
+            "<br><br><b>Nutrition Focus</b><br><br>";
+
+        report +=
+            "Maintain adequate calories, protein and hydration " +
+            "according to the treating team's instructions.";
+
+        report += "</div>";
+
+        report +=
+            "<h3>Recommended Foods</h3>";
+
+        report += "<table>";
+
+        report +=
+            "<tr><th>Meal</th><th>Food</th></tr>";
+
+        report +=
+            "<tr><td>🍳 Breakfast</td><td>Oats + Egg + Fruit</td></tr>";
+
+        report +=
+            "<tr><td>🍱 Lunch</td><td>Rice + Dal + Vegetables</td></tr>";
+
+        report +=
+            "<tr><td>🌱 Snack</td><td>Fruit + Unsalted Nuts</td></tr>";
+
+        report +=
+            "<tr><td>🌙 Dinner</td><td>Chapati + Dal + Soup</td></tr>";
+
+        report += "</table>";
+
+    }
+
+
+    else if(specificSurgery == "Epilepsy Surgery"){
+
+        report +=
+            "<br><h2>🧠 Epilepsy Surgery</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Purpose</b><br><br>";
+
+        report +=
+            "In selected patients, surgery may be considered " +
+            "when seizures remain uncontrolled despite appropriate " +
+            "medical treatment.";
+
+        report +=
+            "<br><br><b>Nutrition Plan</b><br><br>";
+
+        report +=
+            "Follow the neurologist and dietitian's advice. " +
+            "Regular balanced meals and adequate hydration are important.";
+
+        report += "</div>";
+
+    }
+
+
+    else if(specificSurgery == "Brain Bleeding Surgery"){
+
+        report +=
+            "<br><h2>🧠 Brain Bleeding Surgery</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Purpose</b><br><br>";
+
+        report +=
+            "Certain types of bleeding inside the skull may " +
+            "require surgery to remove blood or reduce pressure.";
+
+        report +=
+            "<br><br><b>Recovery Nutrition</b><br><br>";
+
+        report +=
+            "Adequate protein, energy, fluids and nutrient-rich " +
+            "foods may be needed during recovery according to medical advice.";
+
+        report += "</div>";
+
+    }
+
+
+    else if(specificSurgery == "Hydrocephalus Surgery"){
+
+        report +=
+            "<br><h2>🧠 Hydrocephalus Surgery</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Purpose</b><br><br>";
+
+        report +=
+            "Procedures such as shunt placement may be used to " +
+            "manage abnormal accumulation of cerebrospinal fluid.";
+
+        report +=
+            "<br><br><b>Nutrition Plan</b><br><br>";
+
+        report +=
+            "Follow a balanced diet with adequate protein, fluids " +
+            "and calories according to medical advice.";
+
+        report += "</div>";
+
+    }
+
+
+    else if(specificSurgery == "Brain Abscess Surgery"){
+
+        report +=
+            "<br><h2>🧠 Brain Abscess Surgery</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Purpose</b><br><br>";
+
+        report +=
+            "In selected cases, drainage or surgery may be required " +
+            "to treat a brain abscess along with appropriate medical treatment.";
+
+        report +=
+            "<br><br><b>Nutrition Focus</b><br><br>";
+
+        report +=
+            "Adequate protein, calories, vitamins and fluids can " +
+            "support recovery when appropriate.";
+
+        report += "</div>";
+
+    }
+
+
+    /* =========================================================
+       STOMACH SURGERY - SPECIFIC PLANS
+       ========================================================= */
+
+    else if(specificSurgery == "Ulcer Surgery"){
+
+        report +=
+            "<br><h2>🟠 Ulcer Surgery</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Purpose</b><br><br>";
+
+        report +=
+            "Surgery may be needed for certain severe or complicated " +
+            "ulcers, such as ulcers causing bleeding or perforation.";
+
+        report +=
+            "<br><br><b>Post-Surgery Nutrition</b><br><br>";
+
+        report +=
+            "Small, frequent meals and softer foods may be better " +
+            "tolerated during recovery, according to medical advice.";
+
+        report += "</div>";
+
+        report +=
+            "<h3>Food Plan</h3>";
+
+        report += "<table>";
+
+        report +=
+            "<tr><th>Meal</th><th>Recommended Food</th></tr>";
+
+        report +=
+            "<tr><td>🍳 Breakfast</td><td>Soft Idli + Curd</td></tr>";
+
+        report +=
+            "<tr><td>Mid Morning</td><td>Banana</td></tr>";
+
+        report +=
+            "<tr><td>🍱 Lunch</td><td>Soft Rice + Dal + Boiled Vegetables</td></tr>";
+
+        report +=
+            "<tr><td>🌱 Evening</td><td>Curd / Soft Fruit</td></tr>";
+
+        report +=
+            "<tr><td>🌙 Dinner</td><td>Soft Chapati + Vegetable Soup</td></tr>";
+
+        report += "</table>";
+
+    }
+
+
+    else if(specificSurgery == "Gastrectomy"){
+
+        report +=
+            "<br><h2>🟠 Gastrectomy</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>What is Gastrectomy?</b><br><br>";
+
+        report +=
+            "Gastrectomy involves removing part or all of the " +
+            "stomach for selected serious conditions.";
+
+        report +=
+            "<br><br><b>Nutrition Focus</b><br><br>";
+
+        report +=
+            "Meals are often introduced gradually after surgery " +
+            "and may need to be smaller and more frequent.";
+
+        report += "</div>";
+
+        report +=
+            "<h3>Recovery Food Plan</h3>";
+
+        report += "<table>";
+
+        report +=
+            "<tr><th>Meal</th><th>Recommended Food</th></tr>";
+
+        report +=
+            "<tr><td>🍳 Breakfast</td><td>Soft Idli / Oats</td></tr>";
+
+        report +=
+            "<tr><td>🌱 Snack</td><td>Banana / Curd</td></tr>";
+
+        report +=
+            "<tr><td>🍱 Lunch</td><td>Soft Rice + Dal + Vegetables</td></tr>";
+
+        report +=
+            "<tr><td>🌱 Evening</td><td>Curd / Soft Fruit</td></tr>";
+
+        report +=
+            "<tr><td>🌙 Dinner</td><td>Soft Chapati + Soup</td></tr>";
+
+        report += "</table>";
+
+    }
+
+
+    else if(specificSurgery == "Gastric Bypass Surgery"){
+
+        report +=
+            "<br><h2>🟠 Gastric Bypass Surgery</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Purpose</b><br><br>";
+
+        report +=
+            "Gastric bypass is a bariatric procedure that changes " +
+            "the digestive system and may be used for severe obesity " +
+            "in suitable patients.";
+
+        report +=
+            "<br><br><b>Nutrition Focus</b><br><br>";
+
+        report +=
+            "Post-surgery meals are usually progressed gradually, " +
+            "with attention to protein, fluids and prescribed supplements.";
+
+        report += "</div>";
+
+    }
+
+
+    else if(specificSurgery == "Sleeve Gastrectomy"){
+
+        report +=
+            "<br><h2>🟠 Sleeve Gastrectomy</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Purpose</b><br><br>";
+
+        report +=
+            "Sleeve gastrectomy removes a large portion of the " +
+            "stomach and is used as a bariatric procedure for suitable patients.";
+
+        report +=
+            "<br><br><b>Nutrition Plan</b><br><br>";
+
+        report +=
+            "Follow the staged diet provided by the bariatric team. " +
+            "Protein and prescribed vitamin/mineral supplements are important.";
+
+        report += "</div>";
+
+    }
+
+
+    else if(specificSurgery == "Stomach Cancer Surgery"){
+
+        report +=
+            "<br><h2>🟠 Stomach Cancer Surgery</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Purpose</b><br><br>";
+
+        report +=
+            "Surgery may remove part or all of the stomach when " +
+            "appropriate for stomach cancer.";
+
+        report +=
+            "<br><br><b>Nutrition Focus</b><br><br>";
+
+        report +=
+            "Nutrition should focus on adequate protein and calories " +
+            "with meals adjusted to what the patient can tolerate.";
+
+        report += "</div>";
+
+    }
+
+
+    else if(specificSurgery == "Gastrointestinal Perforation Surgery"){
+
+        report +=
+            "<br><h2>🟠 Gastrointestinal Perforation Surgery</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Purpose</b><br><br>";
+
+        report +=
+            "Surgery may be required when a hole develops in the " +
+            "gastrointestinal tract and urgent treatment is necessary.";
+
+        report +=
+            "<br><br><b>Recovery Nutrition</b><br><br>";
+
+        report +=
+            "Food is usually restarted gradually after the medical " +
+            "team confirms that it is safe.";
+
+        report += "</div>";
+
+    }
+
+
+    /* =========================================================
+       KIDNEY SURGERY - SPECIFIC PLANS
+       ========================================================= */
+
+    else if(specificSurgery == "Kidney Stone Removal"){
+
+        report +=
+            "<br><h2>🫘 Kidney Stone Removal</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Purpose</b><br><br>";
+
+        report +=
+            "Kidney stones may be removed using procedures such as " +
+            "ureteroscopy or other appropriate techniques.";
+
+        report +=
+            "<br><br><b>Nutrition Focus</b><br><br>";
+
+        report +=
+            "Fluid intake should follow the doctor's recommendation. " +
+            "Stone prevention advice depends on the stone type.";
+
+        report += "</div>";
+
+        report +=
+            "<h3>General Food Plan</h3>";
+
+        report += "<table>";
+
+        report +=
+            "<tr><th>Meal</th><th>Recommended Food</th></tr>";
+
+        report +=
+            "<tr><td>🍳 Breakfast</td><td>Oats + Fruit</td></tr>";
+
+        report +=
+            "<tr><td>Mid Morning</td><td>Fruit</td></tr>";
+
+        report +=
+            "<tr><td>🍱 Lunch</td><td>Rice + Dal + Vegetables</td></tr>";
+
+        report +=
+            "<tr><td>🌱 Snack</td><td>Fruit / Unsalted Snack</td></tr>";
+
+        report +=
+            "<tr><td>🌙 Dinner</td><td>Chapati + Vegetables</td></tr>";
+
+        report += "</table>";
+
+    }
+
+
+    else if(specificSurgery == "Partial Nephrectomy"){
+
+        report +=
+            "<br><h2>🫘 Partial Nephrectomy</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Purpose</b><br><br>";
+
+        report +=
+            "Partial nephrectomy removes the diseased portion of " +
+            "the kidney while preserving healthy kidney tissue when possible.";
+
+        report +=
+            "<br><br><b>Nutrition Focus</b><br><br>";
+
+        report +=
+            "Diet should be adjusted according to kidney function, " +
+            "blood pressure and the medical team's advice.";
+
+        report += "</div>";
+
+    }
+
+
+    else if(specificSurgery == "Radical Nephrectomy"){
+
+        report +=
+            "<br><h2>🫘 Radical Nephrectomy</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Purpose</b><br><br>";
+
+        report +=
+            "Radical nephrectomy removes the entire kidney in " +
+            "selected cases, commonly for certain kidney tumors.";
+
+        report +=
+            "<br><br><b>Nutrition Focus</b><br><br>";
+
+        report +=
+            "After surgery, nutrition should support healing while " +
+            "considering the function of the remaining kidney.";
+
+        report += "</div>";
+
+    }
+
+
+    else if(specificSurgery == "Kidney Tumor Surgery"){
+
+        report +=
+            "<br><h2>🫘 Kidney Tumor Surgery</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Purpose</b><br><br>";
+
+        report +=
+            "Surgery may remove a kidney tumor when surgery is " +
+            "appropriate for the condition.";
+
+        report +=
+            "<br><br><b>Nutrition Plan</b><br><br>";
+
+        report +=
+            "Choose balanced meals with adequate protein and " +
+            "follow kidney-specific restrictions when prescribed.";
+
+        report += "</div>";
+
+    }
+
+
+    else if(specificSurgery == "Ureter Surgery"){
+
+        report +=
+            "<br><h2>🫘 Ureter Surgery</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Purpose</b><br><br>";
+
+        report +=
+            "Ureter procedures may be performed for obstruction, " +
+            "stones or other urinary tract problems.";
+
+        report +=
+            "<br><br><b>Nutrition Focus</b><br><br>";
+
+        report +=
+            "Maintain appropriate fluid intake as advised and " +
+            "follow any stone-specific diet recommendations.";
+
+        report += "</div>";
+
+    }
+
+
+    else if(specificSurgery == "Kidney Transplantation"){
+
+        report +=
+            "<br><h2>🫘 Kidney Transplantation</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Purpose</b><br><br>";
+
+        report +=
+            "A kidney transplant replaces kidney function using " +
+            "a donated kidney in suitable patients with kidney failure.";
+
+        report +=
+            "<br><br><b>Nutrition Focus</b><br><br>";
+
+        report +=
+            "Post-transplant nutrition must follow the transplant " +
+            "team's instructions, including food safety and medication-related guidance.";
+
+        report += "</div>";
+
+    }
+
+
+    /* =========================================================
+       LIVER SURGERY - SPECIFIC PLANS
+       ========================================================= */
+
+    else if(specificSurgery == "Liver Resection"){
+
+        report +=
+            "<br><h2>🟤 Liver Resection</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Purpose</b><br><br>";
+
+        report +=
+            "Liver resection removes a diseased portion of the " +
+            "liver when surgery is appropriate.";
+
+        report +=
+            "<br><br><b>Recovery Nutrition</b><br><br>";
+
+        report +=
+            "Adequate calories and protein can support recovery, " +
+            "with diet adjusted for liver function and medical advice.";
+
+        report += "</div>";
+
+        report +=
+            "<h3>Food Plan</h3>";
+
+        report += "<table>";
+
+        report +=
+            "<tr><th>Meal</th><th>Recommended Food</th></tr>";
+
+        report +=
+            "<tr><td>🍳 Breakfast</td><td>Oats + Milk + Fruit</td></tr>";
+
+        report +=
+            "<tr><td>Mid Morning</td><td>Papaya / Apple</td></tr>";
+
+        report +=
+            "<tr><td>🍱 Lunch</td><td>Rice + Dal + Vegetables + Lean Protein</td></tr>";
+
+        report +=
+            "<tr><td>🌱 Evening</td><td>Fruit / Curd</td></tr>";
+
+        report +=
+            "<tr><td>🌙 Dinner</td><td>Chapati + Vegetable Soup</td></tr>";
+
+        report += "</table>";
+
+    }
+
+
+    else if(specificSurgery == "Liver Tumor Removal"){
+
+        report +=
+            "<br><h2>🟤 Liver Tumor Removal</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Purpose</b><br><br>";
+
+        report +=
+            "A liver tumor may be surgically removed when the " +
+            "tumor and patient's condition make surgery appropriate.";
+
+        report +=
+            "<br><br><b>Nutrition Focus</b><br><br>";
+
+        report +=
+            "Adequate protein and energy may support recovery, " +
+            "while alcohol should be avoided.";
+
+        report += "</div>";
+
+    }
+
+
+    else if(specificSurgery == "Liver Cancer Surgery"){
+
+        report +=
+            "<br><h2>🟤 Liver Cancer Surgery</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Purpose</b><br><br>";
+
+        report +=
+            "Surgery may be used to remove liver cancer in " +
+            "selected patients when appropriate.";
+
+        report +=
+            "<br><br><b>Nutrition Plan</b><br><br>";
+
+        report +=
+            "A balanced diet with adequate calories and protein " +
+            "should be adjusted according to liver function and treatment.";
+
+        report += "</div>";
+
+    }
+
+
+    else if(specificSurgery == "Liver Transplantation"){
+
+        report +=
+            "<br><h2>🟤 Liver Transplantation</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Purpose</b><br><br>";
+
+        report +=
+            "Liver transplantation replaces a severely damaged " +
+            "liver with a donor liver in selected patients.";
+
+        report +=
+            "<br><br><b>Post-Transplant Nutrition</b><br><br>";
+
+        report +=
+            "Nutrition should be individualized by the transplant " +
+            "team. Adequate protein, safe food handling and medication " +
+            "guidance are important.";
+
+        report += "</div>";
+
+    }
+
+
+    else if(specificSurgery == "Bile Duct Surgery"){
+
+        report +=
+            "<br><h2>🟤 Bile Duct Surgery</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Purpose</b><br><br>";
+
+        report +=
+            "Bile duct procedures may be performed for obstruction, " +
+            "injury, narrowing or other biliary conditions.";
+
+        report +=
+            "<br><br><b>Nutrition Focus</b><br><br>";
+
+        report +=
+            "Follow the treating team's diet advice, especially " +
+            "if there are problems digesting fats.";
+
+        report += "</div>";
+
+    }
+
+
+    else if(specificSurgery == "Gallbladder and Liver Related Surgery"){
+
+        report +=
+            "<br><h2>🟤 Gallbladder and Liver Related Surgery</h2>";
+
+        report += "<div class='tip'>";
+
+        report +=
+            "<b>Nutrition Plan</b><br><br>";
+
+        report +=
+            "After surgery, meals may be kept lighter and lower in " +
+            "fat initially if recommended by the medical team. " +
+            "Gradually return to a balanced diet as tolerated.";
+
+        report += "</div>";
+
+    }
+    report +=
+    "<div class='tip'>" +
+    "<b>🍎 Healthy Food Tip</b><br><br>" +
+    "Include fresh fruits, vegetables, whole grains and protein-rich foods in your daily diet. " +
+    "Drink enough water and prefer fresh, home-cooked foods whenever possible." +
+    "</div>";
+    /* =========================================================
+       DISPLAY REPORT
+       ========================================================= */
+report +=
+    "<div class='tip'>" +
+    "<b>💚 Thank You!</b><br><br>" +
+    "Thank you for using our Nutrition Analysis and Diet Planner.<br>" +
+    "Stay healthy, stay hydrated and follow healthy food habits. 🌿" +
+    "</div>";
+    document.getElementById("result").style.display = "block";
+
+    document.getElementById("result").innerHTML = report;
+
+})
+
+.catch(error => {
+
+    console.error(
+        "Generate Report Error:",
+        error
+    );
+
+    alert(
+        "Unable to generate nutrition report. " +
+        "Please check the Flask server."
+    );
+
+});
+
+}
+
+</script>
+
+</body>
+
+</html>

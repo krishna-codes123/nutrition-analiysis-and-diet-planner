@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Client</title>
+<style>
+* {
+    box-sizing: border-box;
+}
+
+/* ===== MAIN PAGE ===== */
+
+body {
+    margin: 0;
+    padding: 30px;
+    font-family: Arial, sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #D7A86E 0%,
+            #F3D6A4 50%,
+            #8D5524 100%
+        );
+
+    min-height: 100vh;
+    color: #3E2723;
+}
+
+/* ===== PAGE TITLE ===== */
+
+h1 {
+    text-align: center;
+
+    color: #5D4037;
+
+    margin-bottom: 30px;
+
+    font-size: 32px;
+
+    text-shadow:
+        2px 2px 0px #E8C39E;
+}
+
+/* ===== FORM ===== */
+
+form {
+    max-width: 600px;
+    margin: auto;
+    padding: 30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #FFF8E7,
+            #F8E4C0
+        );
+
+    border: 2px solid #B87333;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 10px 25px rgba(93, 64, 55, 0.20);
+}
+
+/* ===== LABEL ===== */
+
+label {
+    display: block;
+
+    margin-top: 15px;
+    margin-bottom: 7px;
+
+    font-weight: bold;
+
+    color: #4E342E;
+}
+
+/* ===== INPUT ===== */
+
+input {
+    width: 100%;
+
+    padding: 12px;
+
+    border: 2px solid #B87333;
+
+    border-radius: 8px;
+
+    font-size: 15px;
+
+    background: #FFFDF7;
+
+    color: #3E2723;
+
+    outline: none;
+
+    transition: 0.3s;
+}
+
+/* ===== INPUT FOCUS ===== */
+
+input:focus {
+    outline: none;
+
+    border-color: #D2694A;
+
+    background: #FFF1E0;
+
+    box-shadow:
+        0 0 8px rgba(210, 105, 74, 0.30);
+}
+
+/* ===== BUTTON ===== */
+
+button {
+    display: block;
+
+    margin: 25px auto 0;
+
+    padding: 13px 30px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #8D5524,
+            #B87333,
+            #D2694A
+        );
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 15px rgba(93, 64, 55, 0.30);
+
+    transition: 0.3s;
+}
+
+/* ===== BUTTON HOVER ===== */
+
+button:hover {
+
+    background:
+        linear-gradient(
+            90deg,
+            #6D4C41,
+            #A0522D,
+            #C65D3A
+        );
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 9px 20px rgba(93, 64, 55, 0.35);
+}
+</style>
+
+
+</head>
+
+<body>
+
+<h1>Edit Client Details</h1>
+
+<form method="POST">
+
+    <label>Name:</label>
+    <input type="text" name="name" value="{{ client.name }}" required>
+    <br><br>
+
+    <label>Age:</label>
+    <input type="number" name="age" value="{{ client.age }}" required>
+    <br><br>
+
+    <label>Gender:</label>
+    <input type="text" name="gender" value="{{ client.gender }}" required>
+    <br><br>
+
+    <label>Height:</label>
+    <input type="number" step="0.01" name="height" value="{{ client.height }}" required>
+    <br><br>
+
+    <label>Weight:</label>
+    <input type="number" step="0.01" name="weight" value="{{ client.weight }}" required>
+    <br><br>
+
+    <label>Diabetes:</label>
+    <input type="text" name="diabetes" value="{{ client.diabetes }}">
+    <br><br>
+
+    <label>BP:</label>
+    <input type="text" name="bp" value="{{ client.bp }}">
+    <br><br>
+
+    <label>Surgery:</label>
+    <input type="text" name="surgery" value="{{ client.surgery }}">
+    <br><br>
+
+    <button type="submit">Update Client</button>
+
+</form>
+
+</body>
+</html>
